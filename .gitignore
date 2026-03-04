@@ -203,3 +203,4 @@ models/
 datasets/
 *.wheels
 *.whl
+uv.lock
