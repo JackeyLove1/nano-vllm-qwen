@@ -201,6 +201,9 @@ cython_debug/
 # model and data files
 models/
 datasets/
+dataset/
 *.wheels
 *.whl
 uv.lock
+*.db
+*.json*
