@@ -64,3 +64,7 @@ See `bench.py` for benchmark.
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=GeeeekExplorer/nano-vllm&type=Date)](https://www.star-history.com/#GeeeekExplorer/nano-vllm&Date)
+
+## Speculate Decoding
+
+datasets: https://huggingface.co/spaces/TIGER-Lab/MMLU-Pro

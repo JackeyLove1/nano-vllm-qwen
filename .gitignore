@@ -207,3 +207,4 @@ dataset/
 uv.lock
 *.db
 *.json*
+outputs/

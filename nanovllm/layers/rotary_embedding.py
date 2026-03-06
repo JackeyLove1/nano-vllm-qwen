@@ -48,7 +48,27 @@ class RotaryEmbedding(nn.Module):
         return query, key
 
 
+def _rope_scaling_cache_key(rope_scaling: dict | None) -> tuple[tuple[str, str], ...] | None:
+    if rope_scaling is None:
+        return None
+    # Keep cache key hashable and deterministic.
+    return tuple(sorted((str(k), repr(v)) for k, v in rope_scaling.items()))
+
+
 @lru_cache(1)
+def _get_rope_cached(
+    head_size: int,
+    rotary_dim: int,
+    max_position: int,
+    base: float,
+    rope_scaling_key: tuple[tuple[str, str], ...] | None = None,
+):
+    # Scaled RoPE is currently not implemented in this lightweight runtime.
+    _ = rope_scaling_key
+    rotary_emb = RotaryEmbedding(head_size, rotary_dim, max_position, base)
+    return rotary_emb
+
+
 def get_rope(
     head_size: int,
     rotary_dim: int,
@@ -56,6 +76,5 @@ def get_rope(
     base: float,
     rope_scaling: dict | None = None,
 ):
-    assert rope_scaling is None
-    rotary_emb = RotaryEmbedding(head_size, rotary_dim, max_position, base)
-    return rotary_emb
+    rope_scaling_key = _rope_scaling_cache_key(rope_scaling)
+    return _get_rope_cached(head_size, rotary_dim, max_position, base, rope_scaling_key)
